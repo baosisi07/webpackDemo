@@ -1,18 +1,20 @@
 webpack4使用总结
-1.安装webpack的同时需要全局安装webpack-cli。
-2.webpack4.x中webpack.config.js这样的配置文件不是必须的。 
-3.默认入口文件是./src/index.js，默认输出文件./dist/main.js，因此可以不定义。
-4.webpack 4 引入了模式，包括 `development`、`production`、`none`三个值，我们不传入值的话，会默认使用 `production`
+1. 安装webpack的同时需要全局安装webpack-cli。
+2. webpack4.x中webpack.config.js这样的配置文件不是必须的。 
+3. 默认入口文件是./src/index.js，默认输出文件./dist/main.js，因此可以不定义。
+4. webpack 4 引入了模式，包括 `development`、`production`、`none`三个值，我们不传入值的话，会默认使用 `production`
+
 运行webpack命令默认寻找webpack.config.js文件并执行
+
 若需指定其他配置文件 输入命令 `webpack --config filename`
 
 
 # demo1
-1、创建工程目录demo1,index.html和src目录下的index.js； 
-2、初始化工程目录：`npm init`。 
-3、全局安装webpack webpack-cli。 
-4、当前目录安装 `npm install webpack webpack-cli --save-dev`。
-5、创建weppack.config.js文件并配置
+1. 创建工程目录demo1,index.html和src目录下的index.js； 
+2. 初始化工程目录：`npm init`。 
+3. 全局安装webpack webpack-cli。 
+4. 当前目录安装 `npm install webpack webpack-cli --save-dev`。
+5. 创建weppack.config.js文件并配置
 ```
 module.exports= {
 	mode: "development", //设置运行模式
@@ -26,7 +28,7 @@ module.exports= {
 	}
 }
 ```
-6.可直接运行webpack命令，即可查看到编译的bundle.js文件
+6. 可直接运行webpack命令，即可查看到编译的bundle.js文件
 也可在package.json文件中添加运行命令
 
 ```
@@ -79,7 +81,7 @@ plugins: [
             chunks: ["main"]
         })
     ]
-    ```
+```
 
 ## 样式文件的引入
 可以直接在require的时候加上loader前缀
