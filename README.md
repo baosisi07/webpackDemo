@@ -90,3 +90,29 @@ plugins: [
 加载器执行顺序从后往前 此处顺序变化会报错 注意顺序
  其中css-loader使样式得以用require的方式引入而不报错
  style-loader使得样式加入到页面中生效
+
+# demo3
+Babel其实是一个编译JavaScript的平台，可以将 JSX/ES6 文件转换成浏览器可以识别的js文件
+而使用 [babel-loader](https://www.npmjs.com/package/babel-loader) 需要安装插件 [babel-preset-es2015](https://www.npmjs.com/package/babel-preset-es2015) 和 [babel-preset-react](https://www.npmjs.com/package/babel-preset-react)， 他们分别用来编译 ES6 and React. 
+首先安装babel相关依赖
+
+`npm install babel-loader babel-core babel-preset-es2015 babel-preset-react --save-dev`
+
+本示例以react的JSX语法写页面 所以需先安装好 react 和 react-dom
+
+babel相关配置如下：
+```
+module: {
+        rules: [{
+            test: /\.jsx?$/,
+            exclude: /node_modules/,
+            use: {
+                loader: "babel-loader",
+                options: {
+                    presets: ["es2015", "react"]
+                }
+            }
+        }
+        ]
+    }
+```
