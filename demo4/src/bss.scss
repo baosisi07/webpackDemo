@@ -1,0 +1,12 @@
+
+$black: #000;
+$font-color: #fff;
+html,body {
+	margin: 0;
+}
+body {
+	background-color: $black;
+}
+.App {
+	color: $font-color;
+}

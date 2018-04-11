@@ -9,7 +9,8 @@ webpack4使用总结
 若需指定其他配置文件 输入命令 `webpack --config filename`
 
 
-# demo1
+# demo1 webpack的基本配置
+
 1. 创建工程目录demo1,index.html和src目录下的index.js； 
 2. 初始化工程目录：`npm init`。 
 3. 全局安装webpack webpack-cli。 
@@ -29,7 +30,7 @@ module.exports= {
 }
 ```
 6. 可直接运行webpack命令，即可查看到编译的bundle.js文件
-也可在package.json文件中添加运行命令
+也可在package.json文件中添加运行命令并运行`npm start`
 
 ```
 "scripts": {
@@ -37,7 +38,8 @@ module.exports= {
     "start": "webpack" //新增
   }
   ```
-# demo2
+
+# demo2 多入口文件的自动化页面配置
 
 ## 多入口文件配置
 
@@ -82,7 +84,7 @@ plugins: [
         })
     ]
 ```
-
+ 
 ## 样式文件的引入
 可以直接在require的时候加上loader前缀
 `require("style-loader!css-loader!./bss.css");`
@@ -91,9 +93,12 @@ plugins: [
  其中css-loader使样式得以用require的方式引入而不报错
  style-loader使得样式加入到页面中生效
 
-# demo3
+# demo3 babel-loader的使用
+
 Babel其实是一个编译JavaScript的平台，可以将 JSX/ES6 文件转换成浏览器可以识别的js文件
+
 而使用 [babel-loader](https://www.npmjs.com/package/babel-loader) 需要安装插件 [babel-preset-es2015](https://www.npmjs.com/package/babel-preset-es2015) 和 [babel-preset-react](https://www.npmjs.com/package/babel-preset-react)， 他们分别用来编译 ES6 and React. 
+
 首先安装babel相关依赖
 
 `npm install babel-loader babel-core babel-preset-es2015 babel-preset-react --save-dev`
@@ -116,3 +121,56 @@ module: {
         ]
     }
 ```
+
+# demo4 实时编译加载页面和sass-loader使用
+
+实时编译依赖 `webpack-dev-server`,webpack-dev-server是一个小型的Node.js Express服务器
+
+webpack输出真实的文件，而webpack-dev-server输出的文件只存在于内存中,不输出真实的文件！
+
+首先安装
+`npm install webpack-dev-server --save-dev`
+
+然后在package.json里面自定义scripts
+--content-base 指定自定义的index.html的位置 本示例为dist
+很多配置参数请参照[webpack-dev-server](https://webpack.js.org/configuration/dev-server/#devserver)
+
+```
+// package.json
+{
+  // ...
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server --devtool eval --hot --progress --colors --content-base dist"
+  },
+  // ...
+}
+```
+
+首先安装[sass-loader](https://www.npmjs.com/package/sass-loader) node-sass
+
+`npm install sass-loader node-sass --save-dev`
+
+webpack.config.js中进行如下配置
+
+```
+module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: [{
+                    loader: "style-loader" // 将 JS 字符串生成为 style 节点
+                }, {
+                    loader: "css-loader" //  将 CSS 转化成 CommonJS 模块
+                }, {
+                    loader: "sass-loader" // 将 Sass 编译成 CSS
+                }]
+            }
+
+        ]
+    }
+```
+
+最后运行命令 `npm run dev`
+
+打开 (http://127.0.0.1:8080/) 即可看到页面 对页面相关文件进行修改会自动编译并刷新
