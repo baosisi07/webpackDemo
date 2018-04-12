@@ -174,3 +174,57 @@ module: {
 最后运行命令 `npm run dev`
 
 打开 (http://127.0.0.1:8080/) 即可看到页面 对页面相关文件进行修改会自动编译并刷新
+
+# demo4 url-loader使用
+
+[url-loader](https://www.npmjs.com/package/url-loader)主要用于图片处理
+
+首先安装
+`npm install --save-dev url-loader`
+
+webpack.config.js
+
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+                            limit: 28745
+                        }
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+index.jsx
+
+```
+import img from "./demo.png";
+import img1 from "./demo1.png";
+
+<img className="image" src={img}/>
+<img className="image" src={img1}/>
+```
+
+运行webpack 生成自动化的页面 然后运行 npm run dev
+此时会报错提示没有file-loader模块
+
+所以还需要安装
+
+`npm install --save-dev file-loader`
+
+ url-loader可以设置文件的大小限制，小于限制的图片转base64(可减少一次http请求),其他情况用file-loader
+然后运行 npm run dev 并打开 (http://127.0.0.1:8080/) 检查元素即可看到图片引用方式的不同
+
+```
+<img class="image" src="data:image/png;base64,iVBOR...jggg===">
+<img class="image" src="/assets/a163bc6aa3f656d1d5ca6bc6a3f38b22.png">
+```
