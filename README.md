@@ -175,7 +175,7 @@ module: {
 
 打开 (http://127.0.0.1:8080/) 即可看到页面 对页面相关文件进行修改会自动编译并刷新
 
-# demo4 url-loader使用
+# demo5 url-loader使用
 
 [url-loader](https://www.npmjs.com/package/url-loader)主要用于图片处理
 
@@ -228,3 +228,45 @@ import img1 from "./demo1.png";
 <img class="image" src="data:image/png;base64,iVBOR...jggg===">
 <img class="image" src="/assets/a163bc6aa3f656d1d5ca6bc6a3f38b22.png">
 ```
+
+# demo6 webpack插件使用及模式切换（webpack4新特性）
+
+本地开发往往需要搭建一个本地服务器 用于浏览页面 为了方便开发 可以安装一个插件[open-browser-webpack-plugin](https://github.com/baldore/open-browser-webpack-plugin)
+
+`npm install open-browser-webpack-plugin --save-dev`
+
+webpack.config.js
+
+```
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+plugins: [
+        new OpenBrowserPlugin({
+            url: 'http://localhost:8080'
+        })
+    ]
+```
+安装好后 在开启服务后浏览器会自动打开页面(http://localhost:8080)
+
+
+1. CommonsChunkPlugin插件用于建立一个独立文件，这个文件将多个入口chunk的公共部分提取出来合成一个文件，这个文件在最开始的时候加载一次边存到缓存中，待后续使用。 在访问页面时会有速度上的提升。
+
+此插件在webpack4中已被删除，而用optimization的配置替代（optimization.splitChunks 和 optimization.runtimeChunk）。
+
+2. uglifyjs-webpack-plugin插件用来压缩js文件，此插件默认webpack4的生产模式，无需安装即可自动压缩。
+
+3. webpack4区分开发环境和生产环境更容易，通过传入参数 --mode development | production 达到区分不同模式的效果。
+
+生产模式可以实现各种优化。 包括缩小，规模提升，tree-shaking等等
+
+开发模式针对速度进行了优化，只不过是提供未缩小的捆绑包。
+
+package.json
+
+```
+"scripts": {
+  "dev": "webpack --mode development",
+  "build": "webpack --mode production"
+}
+```
+
+分别运行 `npm run dev` 和 `npm run build` 生成的文件是不一样的
