@@ -9,7 +9,7 @@ webpack4使用总结
 若需指定其他配置文件 输入命令 `webpack --config filename`
 
 
-# demo1 webpack的基本配置
+## demo1 webpack的基本配置
 
 1. 创建工程目录demo1,index.html和src目录下的index.js； 
 2. 初始化工程目录：`npm init`。 
@@ -39,9 +39,9 @@ module.exports= {
   }
   ```
 
-# demo2 多入口文件的自动化页面配置
+## demo2 多入口文件的自动化页面配置
 
-## 多入口文件配置
+### 多入口文件配置
 
 ```
 entry :{
@@ -58,7 +58,7 @@ output {
 [hash]表每次编译的hash值 多个文件hash值相同
 [chunkhash]每个文件之间不相同的hash值 文件改变后此值会发生变化 否则不变
 
-## 在多个页面中引入带hash的js文件并自定义引入的文件
+### 在多个页面中引入带hash的js文件并自定义引入的文件
 借助插件`html-webpack-plugin`
 插件使用请参照(https://www.npmjs.com/package/html-webpack-plugin)
 
@@ -85,7 +85,7 @@ plugins: [
     ]
 ```
  
-## 样式文件的引入
+### 样式文件的引入
 可以直接在require的时候加上loader前缀
 `require("style-loader!css-loader!./bss.css");`
 
@@ -93,7 +93,7 @@ plugins: [
  其中css-loader使样式得以用require的方式引入而不报错
  style-loader使得样式加入到页面中生效
 
-# demo3 babel-loader的使用
+## demo3 babel-loader的使用
 
 Babel其实是一个编译JavaScript的平台，可以将 JSX/ES6 文件转换成浏览器可以识别的js文件
 
@@ -122,7 +122,7 @@ module: {
     }
 ```
 
-# demo4 实时编译加载页面和sass-loader使用
+## demo4 实时编译加载页面和sass-loader使用
 
 实时编译依赖 `webpack-dev-server`,webpack-dev-server是一个小型的Node.js Express服务器
 
@@ -175,7 +175,7 @@ module: {
 
 打开 (http://127.0.0.1:8080/) 即可看到页面 对页面相关文件进行修改会自动编译并刷新
 
-# demo5 url-loader使用
+## demo5 url-loader使用
 
 [url-loader](https://www.npmjs.com/package/url-loader)主要用于图片处理
 
@@ -229,7 +229,7 @@ import img1 from "./demo1.png";
 <img class="image" src="/assets/a163bc6aa3f656d1d5ca6bc6a3f38b22.png">
 ```
 
-# demo6 webpack插件使用及模式切换（webpack4新特性）
+## demo6 webpack插件使用及模式切换（webpack4新特性）
 
 本地开发往往需要搭建一个本地服务器 用于浏览页面 为了方便开发 可以安装一个插件[open-browser-webpack-plugin](https://github.com/baldore/open-browser-webpack-plugin)
 
